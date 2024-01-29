@@ -4,9 +4,12 @@ import { validationSchema, imageSchema } from '@/validation/propiedadSchema'
 import { collection, addDoc } from "firebase/firestore";
 import { useFirestore } from 'vuefire'
 import { useRouter } from 'vue-router';
+import useImage from "@/composables/useImage";
+
 
 
 const items = [1, 2, 3, 4, 5]
+const { url, uploadImage, image } = useImage()
 const db = useFirestore()
 const router = useRouter()
 
@@ -32,7 +35,8 @@ const submit = handleSubmit(async (values) => {
     const { imagen, ...propiedad } = values;
 
     const docRef = await addDoc(collection(db, "propiedades"), {
-        ...propiedad
+        ...propiedad,
+        imagen: url.value
     });
     if (docRef.id) {
         router.push({ name: 'admin-propiedades' })
@@ -53,7 +57,11 @@ const submit = handleSubmit(async (values) => {
             <v-text-field class="mb-5" label="Titulo Propiedad" v-model="titulo.value.value"
                 :error-messages="titulo.errorMessage.value" />
             <v-file-input accept="image/jpeg/png" label="Fotografia" prepend-icon="mdi-camera" class="mb-5"
-                v-model="imagen.value.value" :error-messages="imagen.errorMessage.value" />
+                v-model="imagen.value.value" :error-messages="imagen.errorMessage.value" @change="uploadImage" />
+            <div v-if="image" class="my-5">
+                <p class="font-weight-bold"> Imagen Propiedad</p>
+                <img class="w-50" :src="image">
+            </div>
             <v-text-field class="mb-5" label="Precio" v-model="precio.value.value"
                 :error-messages="precio.errorMessage.value" />
             <v-row>
