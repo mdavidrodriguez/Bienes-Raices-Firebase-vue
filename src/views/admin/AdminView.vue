@@ -1,6 +1,7 @@
 <script setup>
 import usePropiedades from '@/composables/usePropiedades'
-const { propiedadesCollection, propertyPrice } = usePropiedades()
+const { propiedadesCollection } = usePropiedades()
+import { propertyPrice } from '@/helpers'
 </script>
 <template>
     <h2 class="text-center text-h3 my-5 font-weight-bold">Admin Panel</h2>
