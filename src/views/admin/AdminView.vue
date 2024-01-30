@@ -1,6 +1,6 @@
 <script setup>
 import usePropiedades from '@/composables/usePropiedades'
-const { propiedadesCollection } = usePropiedades()
+const { propiedadesCollection, deleteItem } = usePropiedades()
 import { propertyPrice } from '@/helpers'
 </script>
 <template>
@@ -26,7 +26,7 @@ import { propertyPrice } from '@/helpers'
                         :to="{ name: 'editar-propiedad', params: { id: propiedad.id } }">
                         Editar
                     </v-btn>
-                    <v-btn color="red-darken-3" variant="flat">
+                    <v-btn color="red-darken-3" variant="flat" @click="deleteItem(propiedad.id, propiedad.imagen)">
                         Eliminar
                     </v-btn>
                 </template>
